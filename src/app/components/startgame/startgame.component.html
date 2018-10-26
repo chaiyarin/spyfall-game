@@ -8,20 +8,20 @@
   <div class="row justify-content-center">
     <div class="col-sm-6 col-md-4">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="ใส่ชื่อของคุณ">
+        <input type="text" class="form-control" placeholder="ใส่ชื่อของคุณ" [(ngModel)]="memberName">
       </div>
     </div>
   </div>
   <div class="row justify-content-center">
     <div class="col-sm-6 col-md-4">
       <div class="form-group">
-        <input type="number" class="form-control" placeholder="ตั้งเวลาในแต่ละรอบหน่วยเป็นนาที">
+        <input type="number" class="form-control" placeholder="ตั้งเวลาในแต่ละรอบหน่วยเป็นนาที" [(ngModel)]="timePerRound">
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-6 text-right">
-      <button type="button" class="btn btn-light">สร้างห้อง</button>
+      <button type="button" [routerLink]="['/playroom', memberName, timePerRound]" class="btn btn-light">สร้างห้อง</button>
     </div>
     <div class="col-6">
       <button type="button" routerLink="" class="btn btn-light">กลับ</button>
