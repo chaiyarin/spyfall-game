@@ -1,4 +1,5 @@
 <div class="container">
+  <div *ngIf="false">
     <div class="row mt-5">
       <div class="col-12 text-center">
         <h1>กำลังรอผู้เล่นคนอื่น</h1>
@@ -25,10 +26,59 @@
     <hr>
     <div class="row">
       <div class="col-6 text-right">
-        <button type="button" class="btn btn-light">สร้างห้อง</button>
+        <button type="button" class="btn btn-light">เริ่มเกมส์</button>
       </div>
       <div class="col-6">
-        <button type="button" routerLink="" class="btn btn-light">กลับ</button>
+        <button type="button" routerLink="" class="btn btn-light">ออกจากห้อง</button>
       </div>
     </div>
   </div>
+  <div>
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <h1>07:00</h1>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-12 text-center">
+        สถานที่: โรงพยาบาล
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+        ตำแหน่ง: คุณหมอ
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-12">
+        <h4>รายชื่อผู้เล่น</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 bg-light rounded mt-2 pd-2">ชัยรินทร์ <span class="text-danger bg-light rounded mt-2 pd-2">*1st</span></div>
+      <div class="col-sm-6 bg-light rounded mt-2 pd-2">กิดพล</div>
+      <div class="col-sm-6 bg-light rounded mt-2 pd-2">Chonlasit</div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12">
+        <h4>สถานที่เอาไว้ใช้อ้างอิง</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 bg-light rounded mt-2 pd-2">ชัยรินทร์ <span class="text-danger bg-light rounded mt-2 pd-2">*1st</span></div>
+      <div class="col-sm-6 bg-light rounded mt-2 pd-2">กิดพล</div>
+      <div class="col-sm-6 bg-light rounded mt-2 pd-2">Chonlasit</div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-6 text-right">
+        <button type="button" class="btn btn-light">จบเกมส์</button>
+      </div>
+      <div class="col-6">
+        <button type="button" routerLink="" class="btn btn-light">ออกจากเกมส์</button>
+      </div>
+    </div>
+  </div>
+</div>
