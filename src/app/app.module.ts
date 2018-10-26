@@ -6,12 +6,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { StartgameComponent } from './components/startgame/startgame.component';
 import { MainComponent } from './components/main/main.component';
 import { PlayroomComponent } from './components/playroom/playroom.component';
+import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent },
   { path: 'startgame', component: StartgameComponent },
   { path: 'playroom/:memberName/:timePerRound', component: PlayroomComponent}
 ];
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -22,11 +25,11 @@ const appRoutes: Routes = [
   ],
   imports: [
     RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      appRoutes
     ),
     BrowserModule,
-    FormsModule
+    FormsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]
