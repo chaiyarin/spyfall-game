@@ -12,7 +12,8 @@ export class SpyfallService extends Socket {
   constructor(_ngZone: NgZone,
     nickname: string,
     room_code: string,
-    time_round: string
+    time_round: string,
+    myid: string
   ) {
     super(
       { url: 'http://localhost:3000',
@@ -20,20 +21,24 @@ export class SpyfallService extends Socket {
           query: {
                     nickname: nickname,
                     room_code: room_code,
-                    time_round: time_round
+                    time_round: time_round,
+                    myid: myid
           }
         }
       }, _ngZone);
       this.room_code = room_code;
     }
 
-  addMemberToServer(memberName: string) {
-    const jsonTest = { code: this.room_code, member_name: memberName};
-    this.emit('client-to-server2', jsonTest);
+  getMessage() {
+    return this.fromEvent(this.room_code);
   }
 
-  getMessage() {
-      return this.fromEvent(this.room_code);
+  startgame(room_code: string) {
+    this.emit('startgame', room_code);
+  }
+
+  rendergame() {
+    return this.fromEvent('game-start-' + this.room_code);
   }
 
   removeUser(user: any) {

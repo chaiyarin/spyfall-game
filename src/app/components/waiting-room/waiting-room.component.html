@@ -42,16 +42,21 @@
         </div>
       </div>
       <hr>
-      <div class="row">
-        <div class="col-12 text-center">
-          สถานที่: โรงพยาบาล
-        </div>
+      <div *ngIf="is_spy; else showlocation">
+        <h4>คุณคือสายลับ</h4>
       </div>
-      <div class="row">
-          <div class="col-12 text-center">
-          ตำแหน่ง: คุณหมอ
+      <ng-template #showlocation>
+        <div class="row">
+            <div class="col-12 text-center">
+              สถานที่: โรงพยาบาล
+            </div>
           </div>
-      </div>
+          <div class="row">
+              <div class="col-12 text-center">
+              ตำแหน่ง: คุณหมอ
+              </div>
+          </div>
+      </ng-template>
       <hr>
       <div class="row">
         <div class="col-12">
