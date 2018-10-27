@@ -20,7 +20,7 @@
       <div class="col-12">
         <ul class="list-group" *ngIf="memberList">
           <li class="list-group-item" *ngFor="let user of memberList[room_code]">
-           {{user.nickname}} <i class="fa fa-times pull-right" aria-hidden="true"></i>
+           {{user.nickname}} <i class="fa fa-times pull-right" aria-hidden="true" (click)="kick(user)"></i>
           </li>
         </ul>
       </div>

@@ -35,4 +35,8 @@ export class SpyfallService extends Socket {
   getMessage() {
       return this.fromEvent(this.room_code);
   }
+
+  removeUser(user: any) {
+    this.emit('kick-user', user);
+  }
 }

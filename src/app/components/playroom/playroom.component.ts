@@ -39,4 +39,8 @@ export class PlayroomComponent implements OnInit {
     this.is_wait = true;
   }
 
+  kick(user: any) {
+    this.spyfallService.removeUser(user);
+  }
+
 }
