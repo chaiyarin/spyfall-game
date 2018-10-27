@@ -7,18 +7,32 @@ import { Socket } from 'ng6-socket-io';
 
 export class SpyfallService extends Socket {
 
-  client_code = '0870940955';
+  room_code = '0870940955';
 
-  constructor(private _ngZone: NgZone) {
-    super({ url: 'http://localhost:3000', options: { query: { username: 123} } }, _ngZone);
-  }
+  constructor(_ngZone: NgZone,
+    nickname: string,
+    room_code: string,
+    time_round: string
+  ) {
+    super(
+      { url: 'http://localhost:3000',
+        options: {
+          query: {
+                    nickname: nickname,
+                    room_code: room_code,
+                    time_round: time_round
+          }
+        }
+      }, _ngZone);
+      this.room_code = room_code;
+    }
 
   addMemberToServer(memberName: string) {
-    const jsonTest = { code: this.client_code, member_name: memberName};
+    const jsonTest = { code: this.room_code, member_name: memberName};
     this.emit('client-to-server2', jsonTest);
   }
 
   getMessage() {
-      return this.fromEvent(this.client_code);
+      return this.fromEvent(this.room_code);
   }
 }
