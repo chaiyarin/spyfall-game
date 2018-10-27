@@ -9,6 +9,8 @@ export class StartgameComponent implements OnInit {
 
   constructor() { }
 
+  room_code = Math.random().toString(36).substring(7);
+
   ngOnInit() {
   }
 
