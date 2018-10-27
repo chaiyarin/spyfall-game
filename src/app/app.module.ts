@@ -11,7 +11,7 @@ import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
 const appRoutes: Routes = [
   { path: '', component: MainComponent },
   { path: 'startgame', component: StartgameComponent },
-  { path: 'playroom/:memberName/:timePerRound', component: PlayroomComponent}
+  { path: 'playroom/:memberName/:room_code/:timePerRound', component: PlayroomComponent}
 ];
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
