@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { SpyfallService } from '../../services/spyfall.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-playroom',
@@ -8,14 +9,31 @@ import { SpyfallService } from '../../services/spyfall.service';
 })
 export class PlayroomComponent implements OnInit {
 
-  constructor(private spyfallService: SpyfallService) { }
+  constructor(private spyfallService: SpyfallService,
+  private activatedRoute: ActivatedRoute,
+  private _ngZone: NgZone) { }
+
+  is_wait = true;
+  room_code = '0870940955';
+  memberList = [];
 
   ngOnInit() {
-    this.spyfallService.sendMessage('Test Send Message');
-    this.spyfallService.getMessage().subscribe((result) => {
-      console.log('Test Get Message');
-      console.log(result);
+    const memberName = this.activatedRoute.snapshot.paramMap.get('memberName');
+    const timePerRound = this.activatedRoute.snapshot.paramMap.get('timerPerRound');
+    this.spyfallService.addMemberToServer(memberName);
+    this.spyfallService.getMessage().subscribe(result => {
+      this._ngZone.run(() => {
+        this.memberList = Object.assign(this.memberList , result);
+      });
     });
+  }
+
+  startgame() {
+    this.is_wait = false;
+  }
+
+  endgame() {
+    this.is_wait = true;
   }
 
 }

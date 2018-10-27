@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="false">
+  <div *ngIf="is_wait; else playgame">
     <div class="row mt-5">
       <div class="col-12 text-center">
         <h1>กำลังรอผู้เล่นคนอื่น</h1>
@@ -7,7 +7,7 @@
     </div>
     <div class="row">
       <div class="col-12 text-center">
-        <small>รหัสของห้อง : 0870940955</small>
+        <small>รหัสของห้อง : {{ room_code }}</small>
       </div>
     </div>
     <div class="row">
@@ -18,22 +18,24 @@
     <hr>
     <div class="row">
       <div class="col-12">
-        <ul class="list-group">
-          <li class="list-group-item">อ๊อฟ <i class="fa fa-times pull-right" aria-hidden="true"></i></li>
+        <ul class="list-group" *ngIf="memberList">
+          <li class="list-group-item" *ngFor="let user of memberList">
+           {{user.memberName}} <i class="fa fa-times pull-right" aria-hidden="true"></i>
+          </li>
         </ul>
       </div>
     </div>
     <hr>
     <div class="row">
       <div class="col-6 text-right">
-        <button type="button" class="btn btn-light">เริ่มเกมส์</button>
+        <button type="button" class="btn btn-light" (click)="startgame()">เริ่มเกมส์</button>
       </div>
       <div class="col-6">
         <button type="button" routerLink="" class="btn btn-light">ออกจากห้อง</button>
       </div>
     </div>
   </div>
-  <div>
+  <ng-template #playgame>
     <div class="row mt-5">
       <div class="col-12 text-center">
         <h1>07:00</h1>
@@ -74,11 +76,11 @@
     <hr>
     <div class="row">
       <div class="col-6 text-right">
-        <button type="button" class="btn btn-light">จบเกมส์</button>
+        <button type="button" class="btn btn-light" (click)="endgame()">จบเกมส์</button>
       </div>
       <div class="col-6">
         <button type="button" routerLink="" class="btn btn-light">ออกจากเกมส์</button>
       </div>
     </div>
-  </div>
+  </ng-template>
 </div>
