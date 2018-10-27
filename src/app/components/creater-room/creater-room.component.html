@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <h1>สายลับจับบ้านเล็ก</h1>
+      </div>
+    </div>
+    <hr>
+    <div class="row justify-content-center">
+      <div class="col-sm-6 col-md-4">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="ใส่ชื่อของคุณ" [(ngModel)]="memberName">
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-sm-6 col-md-4">
+        <div class="form-group">
+          <input type="number" class="form-control" placeholder="ตั้งเวลาในแต่ละรอบหน่วยเป็นนาที" [(ngModel)]="timePerRound">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 text-right">
+        <button type="button" [routerLink]="['/waiting-room', memberName, room_code, timePerRound]" class="btn btn-light">สร้างห้อง</button>
+      </div>
+      <div class="col-6">
+        <button type="button" routerLink="" class="btn btn-light">กลับ</button>
+      </div>
+    </div>
+    <hr>
+  </div>

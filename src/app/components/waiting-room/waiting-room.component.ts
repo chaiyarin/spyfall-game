@@ -3,11 +3,11 @@ import { SpyfallService } from '../../services/spyfall.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-playroom',
-  templateUrl: './playroom.component.html',
-  styleUrls: ['./playroom.component.css']
+  selector: 'app-waiting-room',
+  templateUrl: './waiting-room.component.html',
+  styleUrls: ['./waiting-room.component.css']
 })
-export class PlayroomComponent implements OnInit {
+export class WaitingRoomComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -21,8 +21,8 @@ export class PlayroomComponent implements OnInit {
 
   ngOnInit() {
     this.room_code = this.activatedRoute.snapshot.paramMap.get('room_code');
-    const nickname = this.activatedRoute.snapshot.paramMap.get('memberName');
-    const timePerRound = this.activatedRoute.snapshot.paramMap.get('timePerRound');
+    const nickname = this.activatedRoute.snapshot.paramMap.get('friend_name');
+    const timePerRound = this.activatedRoute.snapshot.paramMap.get('time');
     this.spyfallService = new SpyfallService(this._ngZone, nickname, this.room_code, timePerRound);
     this.spyfallService.getMessage().subscribe(result => {
       this._ngZone.run(() => {
@@ -44,3 +44,4 @@ export class PlayroomComponent implements OnInit {
   }
 
 }
+
