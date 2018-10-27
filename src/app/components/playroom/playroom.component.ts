@@ -9,18 +9,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PlayroomComponent implements OnInit {
 
-  constructor(private spyfallService: SpyfallService,
-  private activatedRoute: ActivatedRoute,
-  private _ngZone: NgZone) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private _ngZone: NgZone
+  ) { }
 
   is_wait = true;
-  room_code = '0870940955';
+  room_code;
   memberList = [];
+  spyfallService: any;
 
   ngOnInit() {
-    const memberName = this.activatedRoute.snapshot.paramMap.get('memberName');
-    const timePerRound = this.activatedRoute.snapshot.paramMap.get('timerPerRound');
-    this.spyfallService.addMemberToServer(memberName);
+    this.room_code = this.activatedRoute.snapshot.paramMap.get('room_code');
+    const nickname = this.activatedRoute.snapshot.paramMap.get('memberName');
+    const timePerRound = this.activatedRoute.snapshot.paramMap.get('timePerRound');
+    this.spyfallService = new SpyfallService(this._ngZone, nickname, this.room_code, timePerRound);
     this.spyfallService.getMessage().subscribe(result => {
       this._ngZone.run(() => {
         this.memberList = Object.assign(this.memberList , result);
