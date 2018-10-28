@@ -17,8 +17,12 @@ export class WaitingRoomComponent implements OnInit {
   is_wait = true;
   room_code;
   memberList = [];
+  friend_list = [];
   is_spy = false;
   myid;
+  location;
+  my_position;
+  time;
   spyfallService: any;
 
   ngOnInit() {
@@ -35,12 +39,15 @@ export class WaitingRoomComponent implements OnInit {
     this.spyfallService.rendergame().subscribe(result => {
       console.log(result);
       this._ngZone.run(() => {
-        this.memberList = Object.assign(this.memberList , result);
-        for (let i = 0, l = this.memberList[this.room_code].length; i < l; i++) {
-          if (this.memberList[this.room_code][i].myid === this.myid && this.memberList[this.room_code][i].position === 'spy') {
+        this.location = result.location;
+        this.time = result.time;
+        this.friend_list = Object.assign(this.friend_list , result.friend_list);
+        for (let i = 0, l = this.friend_list.length; i < l; i++) {
+          if (this.friend_list[i].myid === this.myid && this.friend_list[i].position === 'spy') {
             this.is_spy = true;
+            this.my_position = this.friend_list[i].position;
           }
-          if (this.memberList[this.room_code][i].myid === this.myid && this.memberList[this.room_code][i].position === '') {
+          if (this.friend_list[i].myid === this.myid && this.friend_list[i].position === '') {
             this.is_spy = false;
           }
         }
