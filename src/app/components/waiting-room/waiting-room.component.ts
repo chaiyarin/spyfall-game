@@ -52,7 +52,7 @@ export class WaitingRoomComponent implements OnInit {
           }
         }
         let timer = result.timer, minutes, seconds;
-        setInterval(() => {
+        const intance_time = setInterval(() => {
           minutes = parseInt((timer / 60).toString(), 10);
           seconds = parseInt((timer % 60).toString(), 10);
 
@@ -63,7 +63,7 @@ export class WaitingRoomComponent implements OnInit {
 
           if (--timer < 0) {
               alert('หมดเวลากรุณายกมือ ชี้สายลับ');
-              // timer = result.timer;
+              clearInterval(intance_time);
           }
         } , 1000);
         this.is_wait = false;
