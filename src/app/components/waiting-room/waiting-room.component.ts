@@ -46,9 +46,10 @@ export class WaitingRoomComponent implements OnInit {
           if (this.friend_list[i].myid === this.myid && this.friend_list[i].position === 'spy') {
             this.is_spy = true;
             this.my_position = this.friend_list[i].position;
-          }
-          if (this.friend_list[i].myid === this.myid && this.friend_list[i].position === '') {
+          } else if (this.friend_list[i].myid === this.myid) {
             this.is_spy = false;
+            console.log(this.friend_list[i].position);
+            this.my_position = this.friend_list[i].position;
           }
         }
         let timer = result.timer, minutes, seconds;
