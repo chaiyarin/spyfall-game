@@ -29,8 +29,8 @@ export class WaitingRoomComponent implements OnInit {
     this.myid = Math.random().toString(36).substring(7);
     this.room_code = this.activatedRoute.snapshot.paramMap.get('room_code');
     const nickname = this.activatedRoute.snapshot.paramMap.get('friend_name');
-    const timePerRound = this.activatedRoute.snapshot.paramMap.get('time');
-    this.spyfallService = new SpyfallService(this._ngZone, nickname, this.room_code, timePerRound, this.myid);
+    const timePerRound = parseInt(this.activatedRoute.snapshot.paramMap.get('time'), 10);
+    this.spyfallService = new SpyfallService(this._ngZone, nickname, this.room_code, (timePerRound * 60), this.myid);
     this.spyfallService.getMessage().subscribe(result => {
       this._ngZone.run(() => {
         this.memberList = Object.assign(this.memberList , result);
@@ -51,6 +51,21 @@ export class WaitingRoomComponent implements OnInit {
             this.is_spy = false;
           }
         }
+        let timer = result.timer, minutes, seconds;
+        setInterval(() => {
+          minutes = parseInt((timer / 60).toString(), 10);
+          seconds = parseInt((timer % 60).toString(), 10);
+
+          minutes = minutes < 10 ? '0' + minutes : minutes;
+          seconds = seconds < 10 ? '0' + seconds : seconds;
+
+          this.time = minutes + ':' + seconds;
+
+          if (--timer < 0) {
+              alert('หมดเวลากรุณายกมือ ชี้สายลับ');
+              // timer = result.timer;
+          }
+        } , 1000);
         this.is_wait = false;
       });
     });
@@ -66,6 +81,26 @@ export class WaitingRoomComponent implements OnInit {
 
   kick(user: any) {
     this.spyfallService.removeUser(user);
+  }
+
+  countdown_time(duration: number, display: any) {
+    console.log(duration);
+    let timer = duration;
+    let minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt((timer / 60).toString(), 10);
+        seconds = parseInt((timer % 60).toString(), 10);
+
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        display = minutes + ':' + seconds;
+        // console.log(this.time);
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
   }
 
 }

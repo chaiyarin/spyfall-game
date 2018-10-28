@@ -12,7 +12,7 @@ export class SpyfallService extends Socket {
   constructor(_ngZone: NgZone,
     nickname: string,
     room_code: string,
-    time_round: string,
+    time_round: number,
     myid: string
   ) {
     super(
@@ -39,10 +39,6 @@ export class SpyfallService extends Socket {
 
   rendergame() {
     return this.fromEvent('game-start-' + this.room_code);
-  }
-
-  timeCountDown() {
-    return this.fromEvent('time-countdown-' + this.room_code);
   }
 
   removeUser(user: any) {
