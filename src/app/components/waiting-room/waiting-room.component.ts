@@ -70,6 +70,9 @@ export class WaitingRoomComponent implements OnInit {
         this.is_wait = false;
       });
     });
+    this.spyfallService.response_gameend().subscribe(result => {
+      this.is_wait = true;
+    });
   }
 
   startgame() {
@@ -77,7 +80,9 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   endgame() {
-    this.is_wait = true;
+    console.log('test');
+    this.spyfallService.endgame();
+    // this.is_wait = true;
   }
 
   kick(user: any) {
