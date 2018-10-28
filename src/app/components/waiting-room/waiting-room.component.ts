@@ -84,6 +84,11 @@ export class WaitingRoomComponent implements OnInit {
     this.spyfallService.removeUser(user);
   }
 
+  exit_game() {
+    console.log(this.myid);
+    this.spyfallService.exitgame(this.myid);
+  }
+
   countdown_time(duration: number, display: any) {
     console.log(duration);
     let timer = duration;

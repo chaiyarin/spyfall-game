@@ -37,6 +37,15 @@ export class SpyfallService extends Socket {
     this.emit('startgame', room_code);
   }
 
+  exitgame(user_id: string) {
+    console.log('myid:' , user_id);
+    const user = {
+      myid: user_id,
+      room_code: this.room_code
+    };
+    this.emit('kick-user', user);
+  }
+
   rendergame() {
     return this.fromEvent('game-start-' + this.room_code);
   }
