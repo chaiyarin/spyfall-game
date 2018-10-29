@@ -18,6 +18,7 @@ export class WaitingRoomComponent implements OnInit {
   room_code;
   memberList = [];
   friend_list = [];
+  location_list = [];
   is_spy = false;
   myid;
   location;
@@ -40,6 +41,7 @@ export class WaitingRoomComponent implements OnInit {
       console.log(result);
       this._ngZone.run(() => {
         this.location = result.location;
+        this.location_list = result.location_list;
         this.time = result.time;
         this.friend_list = Object.assign(this.friend_list , result.friend_list);
         for (let i = 0, l = this.friend_list.length; i < l; i++) {

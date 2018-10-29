@@ -72,9 +72,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6 bg-light rounded mt-2 pd-2">ชัยรินทร์ <span class="text-danger bg-light rounded mt-2 pd-2">*1st</span></div>
-        <div class="col-sm-6 bg-light rounded mt-2 pd-2">กิดพล</div>
-        <div class="col-sm-6 bg-light rounded mt-2 pd-2">Chonlasit</div>
+        <div class="col-sm-6 bg-light rounded mt-2 pd-2" *ngFor="let location of location_list">{{ location.name }} </div>
       </div>
       <hr>
       <div class="row">
