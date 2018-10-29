@@ -39,7 +39,6 @@ export class SpyfallService extends Socket {
   }
 
   exitgame(user_id: string) {
-    console.log('myid:' , user_id);
     const user = {
       myid: user_id,
       room_code: this.room_code

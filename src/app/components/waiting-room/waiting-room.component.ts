@@ -39,12 +39,9 @@ export class WaitingRoomComponent implements OnInit {
       });
     });
     this.spyfallService.rendergame().subscribe(result => {
-      console.log(result);
       this._ngZone.run(() => {
         this.location = result.location;
         this.location_list = result.location_list;
-        this.time = result.time;
-        console.log(this.time);
         this.friend_list = Object.assign(this.friend_list , result.friend_list);
         for (let i = 0, l = this.friend_list.length; i < l; i++) {
           if (this.friend_list[i].myid === this.myid && this.friend_list[i].position === 'spy') {
@@ -52,7 +49,6 @@ export class WaitingRoomComponent implements OnInit {
             this.my_position = this.friend_list[i].position;
           } else if (this.friend_list[i].myid === this.myid) {
             this.is_spy = false;
-            console.log(this.friend_list[i].position);
             this.my_position = this.friend_list[i].position;
           }
         }
@@ -75,7 +71,9 @@ export class WaitingRoomComponent implements OnInit {
       });
     });
     this.spyfallService.response_gameend().subscribe(result => {
-      this.is_wait = true;
+      this._ngZone.run(() => {
+        this.is_wait = true;
+      });
     });
   }
 
@@ -93,12 +91,11 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   exit_game() {
-    console.log(this.myid);
     this.spyfallService.exitgame(this.myid);
   }
 
   countdown_time(duration: number, display: any) {
-    console.log(duration);
+
     let timer = duration;
     let minutes, seconds;
     setInterval(function () {
@@ -109,7 +106,6 @@ export class WaitingRoomComponent implements OnInit {
         seconds = seconds < 10 ? '0' + seconds : seconds;
 
         display = minutes + ':' + seconds;
-        // console.log(this.time);
 
         if (--timer < 0) {
             timer = duration;
