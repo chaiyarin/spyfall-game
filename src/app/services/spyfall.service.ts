@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Socket } from 'ng6-socket-io';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class SpyfallService extends Socket {
     myid: string
   ) {
     super(
-      { url: 'http://localhost:3000',
+      { url: environment.api_url,
         options: {
           query: {
                     nickname: nickname,
