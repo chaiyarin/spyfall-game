@@ -21,6 +21,7 @@ export class WaitingRoomComponent implements OnInit {
   location_list = [];
   is_spy = false;
   myid;
+  intance_time;
   location;
   my_position;
   time;
@@ -43,6 +44,7 @@ export class WaitingRoomComponent implements OnInit {
         this.location = result.location;
         this.location_list = result.location_list;
         this.time = result.time;
+        console.log(this.time);
         this.friend_list = Object.assign(this.friend_list , result.friend_list);
         for (let i = 0, l = this.friend_list.length; i < l; i++) {
           if (this.friend_list[i].myid === this.myid && this.friend_list[i].position === 'spy') {
@@ -55,7 +57,7 @@ export class WaitingRoomComponent implements OnInit {
           }
         }
         let timer = result.timer, minutes, seconds;
-        const intance_time = setInterval(() => {
+        this.intance_time = setInterval(() => {
           minutes = parseInt((timer / 60).toString(), 10);
           seconds = parseInt((timer % 60).toString(), 10);
 
@@ -66,7 +68,7 @@ export class WaitingRoomComponent implements OnInit {
 
           if (--timer < 0) {
               alert('หมดเวลากรุณายกมือ ชี้สายลับ');
-              clearInterval(intance_time);
+              clearInterval(this.intance_time);
           }
         } , 1000);
         this.is_wait = false;
@@ -82,9 +84,8 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   endgame() {
-    console.log('test');
     this.spyfallService.endgame();
-    // this.is_wait = true;
+    clearInterval(this.intance_time);
   }
 
   kick(user: any) {
