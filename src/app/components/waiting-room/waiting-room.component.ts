@@ -53,6 +53,8 @@ export class WaitingRoomComponent implements OnInit {
           }
         }
         let timer = result.timer, minutes, seconds;
+        console.log(result.timer, minutes, seconds);
+        clearInterval(this.intance_time);
         this.intance_time = setInterval(() => {
           minutes = parseInt((timer / 60).toString(), 10);
           seconds = parseInt((timer % 60).toString(), 10);
