@@ -20,7 +20,7 @@
         <div class="col-12">
           <ul class="list-group" *ngIf="memberList">
             <li class="list-group-item" *ngFor="let user of memberList[room_code]">
-             {{user.nickname}} <i class="fa fa-times pull-right" aria-hidden="true" (click)="kick(user)"></i>
+             {{user.nickname}} <i class="fa fa-times pull-right" aria-hidden="true" (click)="kick(user)" *ngIf="user.myid != myid"></i>
             </li>
           </ul>
         </div>
@@ -64,7 +64,9 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6 bg-light rounded mt-2 pd-2" *ngFor="let user of friend_list">{{ user.nickname }} <span class="text-danger bg-light rounded mt-2 pd-2" *ngIf="user.order==1">*1st</span></div>
+        <div class="col-sm-6 bg-light rounded mt-2 pd-2" *ngFor="let user of friend_list">{{ user.nickname }}
+          <span class="text-danger bg-light rounded mt-2 pd-2" *ngIf="user.order==1">*1st</span>
+        </div>
       </div>
       <div class="row mt-4">
         <div class="col-12">
