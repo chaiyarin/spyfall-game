@@ -19,6 +19,7 @@ export class WaitingRoomComponent implements OnInit {
   room_code;
   // friend_list = [];
   friend_list = [];
+  friend_list_in_game_play = [];
   location_list = [];
   is_spy = false;
   myid;
@@ -82,14 +83,14 @@ export class WaitingRoomComponent implements OnInit {
       this._ngZone.run(() => {
         this.location = result.location;
         this.location_list = result.location_list;
-        this.friend_list = Object.assign(this.friend_list , result.friend_list);
-        for (let i = 0, l = this.friend_list.length; i < l; i++) {
-          if (this.friend_list[i].myid === this.myid && this.friend_list[i].position === 'spy') {
+        this.friend_list_in_game_play = Object.assign([] , result.friend_list);
+        for (let i = 0, l = this.friend_list_in_game_play.length; i < l; i++) {
+          if (this.friend_list_in_game_play[i].myid === this.myid && this.friend_list_in_game_play[i].position === 'spy') {
             this.is_spy = true;
-            this.my_position = this.friend_list[i].position;
-          } else if (this.friend_list[i].myid === this.myid) {
+            this.my_position = this.friend_list_in_game_play[i].position;
+          } else if (this.friend_list_in_game_play[i].myid === this.myid) {
             this.is_spy = false;
-            this.my_position = this.friend_list[i].position;
+            this.my_position = this.friend_list_in_game_play[i].position;
           }
         }
         let timer = result.timer, minutes, seconds;

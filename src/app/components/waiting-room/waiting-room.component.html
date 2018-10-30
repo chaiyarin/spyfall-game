@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6 bg-light rounded mt-2 pd-2" *ngFor="let user of friend_list">{{ user.nickname }}
+        <div class="col-sm-6 bg-light rounded mt-2 pd-2" *ngFor="let user of friend_list_in_game_play">{{ user.nickname }}
           <span class="text-danger bg-light rounded mt-2 pd-2" *ngIf="user.order==1">*1st</span>
         </div>
       </div>
