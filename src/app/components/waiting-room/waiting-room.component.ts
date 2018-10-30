@@ -43,7 +43,7 @@ export class WaitingRoomComponent implements OnInit {
         this.is_wait = false;
         const dateTwo = new Date(result.start_time);
         const secondBetweenTwoDate = Math.abs((new Date().getTime() - dateTwo.getTime()) / 1000);
-        const timeReal = 600 - Math.ceil(secondBetweenTwoDate);
+        const timeReal = result.time_round - Math.ceil(secondBetweenTwoDate);
         let timer = timeReal, minutes, seconds;
         console.log(result.timer, minutes, seconds);
         clearInterval(this.intance_time);
