@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { SpyfallService } from '../../services/spyfall.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-waiting-room',
@@ -11,12 +11,13 @@ export class WaitingRoomComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private router: Router
   ) { }
 
   is_wait = true;
   room_code;
-  memberList = [];
+  // friend_list = [];
   friend_list = [];
   location_list = [];
   is_spy = false;
@@ -33,9 +34,48 @@ export class WaitingRoomComponent implements OnInit {
     const nickname = this.activatedRoute.snapshot.paramMap.get('friend_name');
     const timePerRound = parseInt(this.activatedRoute.snapshot.paramMap.get('time'), 10);
     this.spyfallService = new SpyfallService(this._ngZone, nickname, this.room_code, (timePerRound * 60), this.myid);
+    this.spyfallService.getRoomDetail().subscribe(result => {
+      console.log('Room Detail');
+      console.log(result);
+      this._ngZone.run(() => {
+      if (result.game_start_already) {
+        this.is_wait = false;
+        const dateTwo = new Date(result.start_time);
+        const secondBetweenTwoDate = Math.abs((new Date().getTime() - dateTwo.getTime()) / 1000);
+        const timeReal = 600 - Math.ceil(secondBetweenTwoDate);
+        let timer = timeReal, minutes, seconds;
+        console.log(result.timer, minutes, seconds);
+        clearInterval(this.intance_time);
+        this.intance_time = setInterval(() => {
+          minutes = parseInt((timer / 60).toString(), 10);
+          seconds = parseInt((timer % 60).toString(), 10);
+
+          minutes = minutes < 10 ? '0' + minutes : minutes;
+          seconds = seconds < 10 ? '0' + seconds : seconds;
+
+          this.time = minutes + ':' + seconds;
+
+          if (--timer < 0) {
+              alert('หมดเวลากรุณายกมือ ชี้สายลับ');
+              clearInterval(this.intance_time);
+          }
+        } , 1000);
+      } else {
+        this.is_wait = true;
+        clearInterval(this.intance_time);
+      }
+      });
+    });
     this.spyfallService.getMessage().subscribe(result => {
       this._ngZone.run(() => {
-        this.memberList = Object.assign(this.memberList , result);
+        this.friend_list = Object.assign([] , result);
+      });
+    });
+    this.spyfallService.getResultKick().subscribe(result => {
+      this._ngZone.run(() => {
+       if (result === this.myid) {
+        this.router.navigate(['/']);
+       }
       });
     });
     this.spyfallService.rendergame().subscribe(result => {
@@ -69,12 +109,12 @@ export class WaitingRoomComponent implements OnInit {
               clearInterval(this.intance_time);
           }
         } , 1000);
-        this.is_wait = false;
+        // this.is_wait = false;
       });
     });
     this.spyfallService.response_gameend().subscribe(result => {
       this._ngZone.run(() => {
-        this.is_wait = true;
+        // this.is_wait = true;
       });
     });
   }
