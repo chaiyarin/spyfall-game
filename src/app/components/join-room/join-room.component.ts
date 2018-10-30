@@ -11,7 +11,7 @@ export class JoinRoomComponent implements OnInit {
 
   room_code;
   memberName;
-  timePerRound = 1993;
+  timePerRound = 8;
 
   ngOnInit() {
   }
