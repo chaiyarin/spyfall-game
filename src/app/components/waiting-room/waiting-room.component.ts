@@ -36,8 +36,6 @@ export class WaitingRoomComponent implements OnInit {
     const timePerRound = parseInt(this.activatedRoute.snapshot.paramMap.get('time'), 10);
     this.spyfallService = new SpyfallService(this._ngZone, nickname, this.room_code, (timePerRound * 60), this.myid);
     this.spyfallService.getRoomDetail().subscribe(result => {
-      console.log('Room Detail');
-      console.log(result);
       this._ngZone.run(() => {
       if (result.game_start_already) {
         this.is_wait = false;
@@ -45,7 +43,6 @@ export class WaitingRoomComponent implements OnInit {
         const secondBetweenTwoDate = Math.abs((new Date().getTime() - dateTwo.getTime()) / 1000);
         const timeReal = result.time_round - Math.ceil(secondBetweenTwoDate);
         let timer = timeReal, minutes, seconds;
-        console.log(result.timer, minutes, seconds);
         clearInterval(this.intance_time);
         this.intance_time = setInterval(() => {
           minutes = parseInt((timer / 60).toString(), 10);
@@ -94,7 +91,6 @@ export class WaitingRoomComponent implements OnInit {
           }
         }
         let timer = result.timer, minutes, seconds;
-        console.log(result.timer, minutes, seconds);
         clearInterval(this.intance_time);
         this.intance_time = setInterval(() => {
           minutes = parseInt((timer / 60).toString(), 10);

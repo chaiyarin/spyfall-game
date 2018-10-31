@@ -8,6 +8,8 @@ import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
 import { CreaterRoomComponent } from './components/creater-room/creater-room.component';
 import { WaitingRoomComponent } from './components/waiting-room/waiting-room.component';
 import { JoinRoomComponent } from './components/join-room/join-room.component';
+import { environment } from '../environments/environment';
+
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent },
@@ -16,7 +18,7 @@ const appRoutes: Routes = [
   { path: 'waiting-room/:friend_name/:room_code/:time', component: WaitingRoomComponent },
 ];
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: environment.api_url , options: {} };
 
 @NgModule({
   declarations: [
