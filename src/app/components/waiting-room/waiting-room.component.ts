@@ -28,6 +28,7 @@ export class WaitingRoomComponent implements OnInit {
   my_position;
   time;
   spyfallService: any;
+  display_position = true;
 
   ngOnInit() {
     this.myid = Math.random().toString(36).substring(7);
@@ -150,6 +151,10 @@ export class WaitingRoomComponent implements OnInit {
             timer = duration;
         }
     }, 1000);
+  }
+
+  showhide() {
+    this.display_position = !this.display_position;
   }
 
 }

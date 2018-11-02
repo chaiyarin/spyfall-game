@@ -42,21 +42,28 @@
         </div>
       </div>
       <hr>
-      <div *ngIf="is_spy; else showlocation">
-        <h4>คุณคือสายลับ</h4>
+      <div class="row">
+        <div class="col-12 text-right">
+            <button class="btn btn-light" (click)="showhide()">กดที่นี่เผื่อซ่อนหรือแสดง</button>
+        </div>
       </div>
-      <ng-template #showlocation>
-        <div class="row">
-            <div class="col-12 text-center">
-              สถานที่: {{ location }}
-            </div>
-          </div>
+      <div *ngIf="display_position">
+        <div *ngIf="is_spy; else showlocation">
+          <h4>คุณคือสายลับ</h4>
+        </div>
+        <ng-template #showlocation>
           <div class="row">
               <div class="col-12 text-center">
-              ตำแหน่ง: {{ my_position }}
+                สถานที่: {{ location }}
               </div>
-          </div>
-      </ng-template>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                ตำแหน่ง: {{ my_position }}
+                </div>
+            </div>
+        </ng-template>
+    </div>
       <hr>
       <div class="row">
         <div class="col-12">
