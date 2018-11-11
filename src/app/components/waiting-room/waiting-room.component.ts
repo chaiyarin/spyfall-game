@@ -25,13 +25,24 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   ngOnInit() {
+
     if (!this.spyfallService.getRoomCode()) {
       this.spyfallService.setRoomCode(this.activatedRoute.snapshot.paramMap.get('roomCode'));
     }
+
     this.roomCode = this.spyfallService.getRoomCode();
+
     this.spyfallService.connectRoom();
+
     this.spyfallService.receiveDetailRoom().subscribe( (result) => {
       Object.assign(this.roomDetail, result);
+    });
+
+    this.spyfallService.receiveNoRoomCodeExist().subscribe( (result) => {
+      if (result) {
+        alert('รหัสห้อง ' + this.spyfallService.getRoomCode() + ' ไม่มีอยู่ในระบบ กรุณาหรอกรหัสห้องใหม่');
+        this.router.navigate(['/join-room']);
+      }
     });
   }
 

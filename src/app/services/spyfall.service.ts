@@ -96,4 +96,16 @@ export class SpyfallService {
     return observable;
   }
 
+  receiveNoRoomCodeExist() {
+    const observable = new Observable(observer => {
+      this.socket.on('noRoomCodeExist:' + this.getMyUniqId(), (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
 }
