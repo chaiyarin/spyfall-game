@@ -23,7 +23,7 @@ export class WaitingRoomComponent implements OnInit {
   ) {
     this.uniqCode = this.spyfallService.getMyUniqId();
     this.roomDetail = new RoomDetail();
-    if (!this.spyfallService.getMyName()) {
+    if (typeof this.spyfallService.getMyName() === 'undefined') {
       this.router.navigate(['/join-room']);
     }
   }
@@ -37,7 +37,6 @@ export class WaitingRoomComponent implements OnInit {
     this.spyfallService.connectRoom();
 
     this.spyfallService.receiveDetailRoom().subscribe( (result) => {
-      console.log(result);
       Object.assign(this.roomDetail, result);
     });
 
@@ -49,7 +48,6 @@ export class WaitingRoomComponent implements OnInit {
     });
 
     this.spyfallService.receiveKickUser().subscribe( (result: any) => {
-      console.log(result);
       if (result.uniq_code === this.spyfallService.getMyUniqId()) {
         this.router.navigate(['/']);
       }

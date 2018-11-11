@@ -20,7 +20,6 @@ export class SpyfallService {
   private myUniqId = Math.random().toString(36).substring(7);
 
   constructor() {
-    this.socket = io.connect(this.apiUrl);
   }
 
   setName(name: string) {
@@ -60,10 +59,10 @@ export class SpyfallService {
   }
 
   connectRoom() {
+    this.socket = io.connect(this.apiUrl);
     if (this.getIsOwnRoom()) {
       this.tellServerCreateRoom();
     } else {
-      console.log(132);
       this.tellServerJoinRoom();
     }
   }
