@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SpyfallService } from '../../services/spyfall.service';
 
 @Component({
   selector: 'app-join-room',
@@ -7,13 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JoinRoomComponent implements OnInit {
 
-  constructor() { }
+  constructor(private spyfallService: SpyfallService) { }
 
-  room_code;
-  memberName;
-  timePerRound = 8;
+  room_code: string;
+  memberName: string;
 
   ngOnInit() {
+  }
+
+  setMemberName() {
+    this.spyfallService.setName(this.memberName);
+  }
+
+  setRoomCode() {
+    this.spyfallService.setRoomCode(this.room_code);
   }
 
 }

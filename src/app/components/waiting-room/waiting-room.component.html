@@ -1,5 +1,5 @@
 <div class="container">
-    <div *ngIf="is_wait; else playgame">
+    <div *ngIf="isWait; else playgame">
       <div class="row mt-5">
         <div class="col-12 text-center">
           <h1>กำลังรอผู้เล่นคนอื่น</h1>
@@ -7,7 +7,7 @@
       </div>
       <div class="row">
         <div class="col-12 text-center">
-          <small>รหัสของห้อง : {{ room_code }}</small>
+          <small>รหัสของห้อง : {{ roomCode }}</small>
         </div>
       </div>
       <div class="row">
@@ -18,9 +18,9 @@
       <hr>
       <div class="row">
         <div class="col-12">
-          <ul class="list-group" *ngIf="friend_list">
-            <li class="list-group-item" *ngFor="let user of friend_list">
-             {{user.nickname}} <i class="fa fa-times pull-right" aria-hidden="true" (click)="kick(user)" *ngIf="user.myid != myid"></i>
+          <ul class="list-group" *ngIf="roomDetail.players != 'undefined'">
+            <li class="list-group-item" *ngFor="let player of roomDetail.players">
+             {{player.name}} <i class="fa fa-times pull-right" aria-hidden="true" (click)="kick(player)" *ngIf="player.uniq_code != uniqCode"></i>
             </li>
           </ul>
         </div>

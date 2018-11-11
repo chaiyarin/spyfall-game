@@ -8,20 +8,20 @@
     <div class="row justify-content-center">
       <div class="col-sm-6 col-md-4">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="ใส่รหัสห้อง" [(ngModel)]="room_code">
+          <input type="text" class="form-control" placeholder="ใส่รหัสห้อง" (change)="setRoomCode()" [(ngModel)]="room_code">
         </div>
       </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-sm-6 col-md-4">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="ใส่ชื่อของคุณ" [(ngModel)]="memberName">
+            <input type="text" class="form-control" placeholder="ใส่ชื่อของคุณ" (change)="setMemberName()" [(ngModel)]="memberName">
           </div>
         </div>
       </div>
     <div class="row">
       <div class="col-6 text-right">
-        <button type="button" [routerLink]="['/waiting-room', memberName, room_code, timePerRound]" class="btn btn-light">เข้าร่วมห้อง</button>
+        <button type="button" [routerLink]="['/waiting-room', room_code]" class="btn btn-light">เข้าร่วมห้อง</button>
       </div>
       <div class="col-6">
         <button type="button" routerLink="" class="btn btn-light">กลับ</button>

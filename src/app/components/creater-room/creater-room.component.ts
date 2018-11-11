@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SpyfallService } from '../../services/spyfall.service';
 
 @Component({
   selector: 'app-creater-room',
@@ -7,11 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreaterRoomComponent implements OnInit {
 
-  constructor() { }
+  constructor(private spyfallService: SpyfallService) { }
 
-  room_code = Math.random().toString(36).substring(7);
+  memberName: string;
+  timePerRound: number;
+  roomCode = Math.random().toString(36).substring(7);
 
   ngOnInit() {
+    this.spyfallService.setIsOwnRoom(true);
+  }
+
+  setName() {
+    this.spyfallService.setName(this.memberName);
+  }
+
+  setTime() {
+    this.spyfallService.setTimePerRound(this.timePerRound);
   }
 
 }

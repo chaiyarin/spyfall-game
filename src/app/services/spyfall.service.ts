@@ -1,72 +1,99 @@
-import { Injectable, NgZone } from '@angular/core';
-import { Socket } from 'ng6-socket-io';
+import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import io from 'socket.io-client';
+import { RoomDetail } from '../models/room-detail';
+import { Player } from '../models/player';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class SpyfallService extends Socket {
+export class SpyfallService {
 
-  room_code = '0870940955';
+  private socket;
+  private apiUrl = environment.apiUrl;
+  private myName: string;
+  private roomCode: string;
+  private isOwnRoom: boolean;
+  private timePerRound: number;
+  private myUniqId = Math.random().toString(36).substring(7);
 
-  constructor(_ngZone: NgZone,
-    nickname: string,
-    room_code: string,
-    time_round: number,
-    myid: string
-  ) {
-    super(
-      { url: environment.api_url,
-        options: {
-          query: {
-                    nickname: nickname,
-                    room_code: room_code,
-                    time_round: time_round,
-                    myid: myid
-          }
-        }
-      }, _ngZone);
-      this.room_code = room_code;
+  constructor() {
+    this.socket = io.connect(this.apiUrl);
+  }
+
+  setName(name: string) {
+    this.myName = name;
+  }
+
+  setRoomCode(roomCode: string) {
+    this.roomCode = roomCode;
+  }
+
+  getRoomCode() {
+    return this.roomCode;
+  }
+
+  setIsOwnRoom(isOwnRoom: boolean) {
+    this.isOwnRoom = isOwnRoom;
+  }
+
+  getIsOwnRoom() {
+    return this.isOwnRoom;
+  }
+
+  setTimePerRound(time: number) {
+    this.timePerRound = time;
+  }
+
+  getTimePerRound() {
+    return this.timePerRound;
+  }
+
+  getMyName() {
+    return this.myName;
+  }
+
+  getMyUniqId() {
+    return this.myUniqId;
+  }
+
+  connectRoom() {
+    if (this.getIsOwnRoom()) {
+      this.tellServerCreateRoom();
+    } else {
+      console.log(132);
+      this.tellServerJoinRoom();
     }
-
-  getMessage() {
-    return this.fromEvent(this.room_code);
   }
 
-  startgame(room_code: string) {
-    this.emit('startgame', room_code);
+  tellServerCreateRoom() {
+    const roomDetail = new RoomDetail();
+    const player = new Player();
+    player.name = this.getMyName();
+    player.uniq_code = this.getMyUniqId();
+    roomDetail.room_code = this.getRoomCode();
+    this.socket.emit('createRoom', { room_detail: roomDetail, player: player});
   }
 
-  exitgame(user_id: string) {
-    const user = {
-      myid: user_id,
-      room_code: this.room_code
-    };
-    this.emit('kick-user', user);
+  tellServerJoinRoom() {
+    const player = new Player();
+    player.name = this.getMyName();
+    player.uniq_code = this.getMyUniqId();
+    this.socket.emit('joinRoom', { room_code: this.getRoomCode(), player: player});
   }
 
-  endgame() {
-    this.emit('endgame', {room_code: this.room_code});
+  receiveDetailRoom() {
+    const observable = new Observable(observer => {
+      this.socket.on('sendToClientRoom:' + this.getRoomCode(), (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
   }
 
-  response_gameend() {
-    return this.fromEvent('endgame-' + this.room_code);
-  }
-
-  rendergame() {
-    return this.fromEvent('game-start-' + this.room_code);
-  }
-
-  removeUser(user: any) {
-    this.emit('kick-user', user);
-  }
-
-  getRoomDetail() {
-    return this.fromEvent('room-detail-' + this.room_code);
-  }
-
-  getResultKick() {
-    return this.fromEvent('kick-' + this.room_code);
-  }
 }
