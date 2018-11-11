@@ -20,7 +20,7 @@
         <div class="col-12">
           <ul class="list-group" *ngIf="roomDetail.players != 'undefined'">
             <li class="list-group-item" *ngFor="let player of roomDetail.players">
-             {{player.name}} <i class="fa fa-times pull-right" aria-hidden="true" (click)="kick(player)" *ngIf="player.uniq_code != uniqCode"></i>
+             {{player.name}} <i class="fa fa-times pull-right" aria-hidden="true" (click)="kickUser(player)" *ngIf="player.uniq_code != uniqCode"></i>
             </li>
           </ul>
         </div>
@@ -31,7 +31,7 @@
           <button type="button" class="btn btn-light" (click)="startgame()">เริ่มเกมส์</button>
         </div>
         <div class="col-6">
-          <button type="button" routerLink="" class="btn btn-light" (click)="exit_game()">ออกจากห้อง</button>
+          <button type="button" routerLink="" class="btn btn-light" (click)="exitGame()">ออกจากห้อง</button>
         </div>
       </div>
     </div>

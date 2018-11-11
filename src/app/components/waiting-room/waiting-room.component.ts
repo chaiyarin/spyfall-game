@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { SpyfallService } from '../../services/spyfall.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomDetail } from '../../models/room-detail';
+import { Player } from '../../models/player';
 
 @Component({
   selector: 'app-waiting-room',
@@ -22,19 +23,21 @@ export class WaitingRoomComponent implements OnInit {
   ) {
     this.uniqCode = this.spyfallService.getMyUniqId();
     this.roomDetail = new RoomDetail();
+    if (!this.spyfallService.getMyName()) {
+      this.router.navigate(['/join-room']);
+    }
   }
 
   ngOnInit() {
 
-    if (!this.spyfallService.getRoomCode()) {
-      this.spyfallService.setRoomCode(this.activatedRoute.snapshot.paramMap.get('roomCode'));
-    }
+    this.spyfallService.setRoomCode(this.activatedRoute.snapshot.paramMap.get('roomCode'));
 
     this.roomCode = this.spyfallService.getRoomCode();
 
     this.spyfallService.connectRoom();
 
     this.spyfallService.receiveDetailRoom().subscribe( (result) => {
+      console.log(result);
       Object.assign(this.roomDetail, result);
     });
 
@@ -44,6 +47,23 @@ export class WaitingRoomComponent implements OnInit {
         this.router.navigate(['/join-room']);
       }
     });
+
+    this.spyfallService.receiveKickUser().subscribe( (result: any) => {
+      console.log(result);
+      if (result.uniq_code === this.spyfallService.getMyUniqId()) {
+        this.router.navigate(['/']);
+      }
+    });
+  }
+
+  kickUser(player: Player) {
+    this.spyfallService.tellServerKickUser(player);
+  }
+
+  exitGame() {
+    const player = new Player();
+    player.uniq_code = this.spyfallService.getMyUniqId();
+    this.kickUser(player);
   }
 
 }

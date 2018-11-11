@@ -84,6 +84,22 @@ export class SpyfallService {
     this.socket.emit('joinRoom', { room_code: this.getRoomCode(), player: player});
   }
 
+  tellServerKickUser(player: any) {
+    this.socket.emit('kickUser', { room_code: this.getRoomCode(), player: player});
+  }
+
+  receiveKickUser() {
+    const observable = new Observable(observer => {
+      this.socket.on('updateKickUser:' + this.getRoomCode(), (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
   receiveDetailRoom() {
     const observable = new Observable(observer => {
       this.socket.on('sendToClientRoom:' + this.getRoomCode(), (data) => {
