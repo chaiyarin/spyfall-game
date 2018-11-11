@@ -21,6 +21,7 @@ export class WaitingRoomComponent implements OnInit {
     private router: Router,
     private spyfallService: SpyfallService
   ) {
+    this.spyfallService.setRoomCode(this.activatedRoute.snapshot.paramMap.get('roomCode'));
     this.uniqCode = this.spyfallService.getMyUniqId();
     this.roomDetail = new RoomDetail();
     if (typeof this.spyfallService.getMyName() === 'undefined') {
@@ -29,8 +30,6 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.spyfallService.setRoomCode(this.activatedRoute.snapshot.paramMap.get('roomCode'));
 
     this.roomCode = this.spyfallService.getRoomCode();
 

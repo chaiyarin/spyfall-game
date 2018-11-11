@@ -8,10 +8,14 @@ import { SpyfallService } from '../../services/spyfall.service';
 })
 export class JoinRoomComponent implements OnInit {
 
-  constructor(private spyfallService: SpyfallService) { }
-
   room_code: string;
   memberName: string;
+
+  constructor(private spyfallService: SpyfallService) {
+    if (typeof this.spyfallService.getRoomCode() !== 'undefined') {
+      this.room_code = this.spyfallService.getRoomCode();
+    }
+  }
 
   ngOnInit() {
   }
