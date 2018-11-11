@@ -3,6 +3,7 @@ import { SpyfallService } from '../../services/spyfall.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomDetail } from '../../models/room-detail';
 import { Player } from '../../models/player';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-waiting-room',
@@ -15,23 +16,25 @@ export class WaitingRoomComponent implements OnInit {
   roomCode: string;
   roomDetail: RoomDetail;
   uniqCode: string;
+  urlWaitingRoomWithRoomCode: string;
+  isQrDisplay = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private spyfallService: SpyfallService
   ) {
-    this.spyfallService.setRoomCode(this.activatedRoute.snapshot.paramMap.get('roomCode'));
-    this.uniqCode = this.spyfallService.getMyUniqId();
-    this.roomDetail = new RoomDetail();
-    if (typeof this.spyfallService.getMyName() === 'undefined') {
-      this.router.navigate(['/join-room']);
-    }
+      this.spyfallService.setRoomCode(this.activatedRoute.snapshot.paramMap.get('roomCode'));
+      this.roomCode = this.spyfallService.getRoomCode();
+      this.urlWaitingRoomWithRoomCode = `${environment.baseUrl}/waiting-room/${this.roomCode}`;
+      this.uniqCode = this.spyfallService.getMyUniqId();
+      this.roomDetail = new RoomDetail();
+      if (typeof this.spyfallService.getMyName() === 'undefined') {
+        this.router.navigate(['/join-room']);
+      }
   }
 
   ngOnInit() {
-
-    this.roomCode = this.spyfallService.getRoomCode();
 
     this.spyfallService.connectRoom();
 
@@ -61,6 +64,10 @@ export class WaitingRoomComponent implements OnInit {
     const player = new Player();
     player.uniq_code = this.spyfallService.getMyUniqId();
     this.kickUser(player);
+  }
+
+  displayQrCode() {
+    this.isQrDisplay = !this.isQrDisplay;
   }
 
 }

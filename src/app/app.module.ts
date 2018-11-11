@@ -7,6 +7,7 @@ import { MainComponent } from './components/main/main.component';
 import { CreaterRoomComponent } from './components/creater-room/creater-room.component';
 import { WaitingRoomComponent } from './components/waiting-room/waiting-room.component';
 import { JoinRoomComponent } from './components/join-room/join-room.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 const appRoutes: Routes = [
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
     ),
     BrowserModule,
     FormsModule,
+    QRCodeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,9 +11,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12 text-center">
-          <small><i class="fa fa-qrcode" aria-hidden="true"></i></small>
+        <div class="col-12 text-center" (click)="displayQrCode()">
+          <h4><i class="fa fa-qrcode" aria-hidden="true"></i></h4>
         </div>
+      </div>
+      <div class="row justify-content-center" *ngIf="isQrDisplay">
+        <qrcode [qrdata]="urlWaitingRoomWithRoomCode" [size]="128" [level]="'M'" class="text-center"></qrcode>
       </div>
       <hr>
       <div class="row">
