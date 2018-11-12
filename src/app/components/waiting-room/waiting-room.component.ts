@@ -13,11 +13,17 @@ import { environment } from '../../../environments/environment';
 export class WaitingRoomComponent implements OnInit {
 
   isWait = true;
+  isSpy = false;
+  displayPosition = true;
   roomCode: string;
   roomDetail: RoomDetail;
   uniqCode: string;
   urlWaitingRoomWithRoomCode: string;
   isQrDisplay = false;
+  location: string;
+  locations;
+  playerInGame: Array<Player>;
+  myPlayer: Player;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,6 +63,16 @@ export class WaitingRoomComponent implements OnInit {
 
     this.spyfallService.receiveRenderGame().subscribe( (result: RoomDetail) => {
       console.log(result);
+      this.isWait = !result.is_play;
+      this.location = result.location;
+      this.locations = result.locations;
+      this.playerInGame = result.players;
+      for (let i = 0; i < this.playerInGame.length; i++) {
+        if (this.playerInGame[i].uniq_code === this.spyfallService.getMyUniqId()) {
+          this.myPlayer = this.playerInGame[i];
+          i = this.playerInGame.length;
+        }
+      }
     });
   }
 
@@ -76,6 +92,10 @@ export class WaitingRoomComponent implements OnInit {
 
   startGame() {
     this.spyfallService.tellServerStartGame(this.roomDetail);
+  }
+
+  showhide() {
+    this.displayPosition = !this.displayPosition;
   }
 
 }

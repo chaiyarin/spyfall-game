@@ -50,8 +50,8 @@
             <button class="btn btn-light" (click)="showhide()">กดที่นี่เผื่อซ่อนหรือแสดง</button>
         </div>
       </div>
-      <div *ngIf="display_position">
-        <div *ngIf="is_spy; else showlocation">
+      <div *ngIf="displayPosition">
+        <div *ngIf="myPlayer.is_spy; else showlocation">
           <h4>คุณคือสายลับ</h4>
         </div>
         <ng-template #showlocation>
@@ -62,7 +62,7 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center">
-                ตำแหน่ง: {{ my_position }}
+                ตำแหน่ง: {{ myPlayer.position }}
                 </div>
             </div>
         </ng-template>
@@ -74,8 +74,8 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6 bg-light rounded mt-2 pd-2" *ngFor="let user of friend_list_in_game_play">{{ user.nickname }}
-          <span class="text-danger bg-light rounded mt-2 pd-2" *ngIf="user.order==1">*1st</span>
+        <div class="col-sm-6 bg-light rounded mt-2 pd-2" *ngFor="let player of playerInGame">{{ player.name }}
+          <span class="text-danger bg-light rounded mt-2 pd-2" *ngIf="player.order===1">*1st</span>
         </div>
       </div>
       <div class="row mt-4">
@@ -84,7 +84,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6 bg-light rounded mt-2 pd-2" *ngFor="let location of location_list">{{ location.name }} </div>
+        <div class="col-sm-6 bg-light rounded mt-2 pd-2" *ngFor="let location of locations">{{ location.name }} </div>
       </div>
       <hr>
       <div class="row">
