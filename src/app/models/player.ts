@@ -4,6 +4,7 @@ export class Player {
   position: string;
   is_own_room: boolean;
   uniq_code: string;
+  order: number;
   constructor() {
     this.uniq_code = '';
     this.name = '';

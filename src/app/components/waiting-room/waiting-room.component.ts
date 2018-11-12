@@ -70,5 +70,9 @@ export class WaitingRoomComponent implements OnInit {
     this.isQrDisplay = !this.isQrDisplay;
   }
 
+  startGame() {
+    this.spyfallService.tellServerStartGame(this.roomDetail);
+  }
+
 }
 

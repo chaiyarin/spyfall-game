@@ -72,6 +72,7 @@ export class SpyfallService {
     const player = new Player();
     player.name = this.getMyName();
     player.uniq_code = this.getMyUniqId();
+    player.is_own_room = true;
     roomDetail.room_code = this.getRoomCode();
     roomDetail.time_per_round = this.getTimePerRound();
     this.socket.emit('createRoom', { room_detail: roomDetail, player: player});
