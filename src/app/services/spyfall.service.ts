@@ -73,6 +73,7 @@ export class SpyfallService {
     player.name = this.getMyName();
     player.uniq_code = this.getMyUniqId();
     roomDetail.room_code = this.getRoomCode();
+    roomDetail.time_per_round = this.getTimePerRound();
     this.socket.emit('createRoom', { room_detail: roomDetail, player: player});
   }
 
@@ -87,13 +88,17 @@ export class SpyfallService {
     this.socket.emit('kickUser', { room_code: this.getRoomCode(), player: player});
   }
 
+  tellServerStartGame(roomDetail) {
+    this.socket.emit('startGame', { room_detail: roomDetail } );
+  }
+
   receiveKickUser() {
     const observable = new Observable(observer => {
       this.socket.on('updateKickUser:' + this.getRoomCode(), (data) => {
         observer.next(data);
       });
       return () => {
-        this.socket.disconnect();
+        // this.socket.disconnect();
       };
     });
     return observable;
@@ -105,7 +110,7 @@ export class SpyfallService {
         observer.next(data);
       });
       return () => {
-        this.socket.disconnect();
+        // this.socket.disconnect();
       };
     });
     return observable;
@@ -117,7 +122,7 @@ export class SpyfallService {
         observer.next(data);
       });
       return () => {
-        this.socket.disconnect();
+        // this.socket.disconnect();
       };
     });
     return observable;
