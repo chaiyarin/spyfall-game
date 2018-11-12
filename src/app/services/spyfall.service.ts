@@ -99,7 +99,19 @@ export class SpyfallService {
         observer.next(data);
       });
       return () => {
-        // this.socket.disconnect();
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
+  receiveRenderGame() {
+    const observable = new Observable(observer => {
+      this.socket.on('updateUIRenderGame:' + this.getRoomCode(), (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
       };
     });
     return observable;
@@ -111,7 +123,7 @@ export class SpyfallService {
         observer.next(data);
       });
       return () => {
-        // this.socket.disconnect();
+        this.socket.disconnect();
       };
     });
     return observable;
@@ -123,7 +135,7 @@ export class SpyfallService {
         observer.next(data);
       });
       return () => {
-        // this.socket.disconnect();
+        this.socket.disconnect();
       };
     });
     return observable;

@@ -54,6 +54,10 @@ export class WaitingRoomComponent implements OnInit {
         this.router.navigate(['/']);
       }
     });
+
+    this.spyfallService.receiveRenderGame().subscribe( (result: RoomDetail) => {
+      console.log(result);
+    });
   }
 
   kickUser(player: Player) {
