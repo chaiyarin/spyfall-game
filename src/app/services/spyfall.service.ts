@@ -85,6 +85,10 @@ export class SpyfallService {
     this.socket.emit('joinRoom', { room_code: this.getRoomCode(), player: player});
   }
 
+  tellServerEndGame() {
+    this.socket.emit('endGame', { room_code: this.getRoomCode()});
+  }
+
   tellServerKickUser(player: any) {
     this.socket.emit('kickUser', { room_code: this.getRoomCode(), player: player});
   }

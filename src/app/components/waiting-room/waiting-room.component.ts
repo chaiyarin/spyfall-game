@@ -46,6 +46,7 @@ export class WaitingRoomComponent implements OnInit {
 
     this.spyfallService.receiveDetailRoom().subscribe( (result) => {
       Object.assign(this.roomDetail, result);
+      this.isWait = !this.roomDetail.is_play;
     });
 
     this.spyfallService.receiveNoRoomCodeExist().subscribe( (result) => {
@@ -62,7 +63,6 @@ export class WaitingRoomComponent implements OnInit {
     });
 
     this.spyfallService.receiveRenderGame().subscribe( (result: RoomDetail) => {
-      console.log(result);
       this.isWait = !result.is_play;
       this.location = result.location;
       this.locations = result.locations;
@@ -81,6 +81,7 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   exitGame() {
+    this.spyfallService.setRoomCode('');
     const player = new Player();
     player.uniq_code = this.spyfallService.getMyUniqId();
     this.kickUser(player);
@@ -92,6 +93,10 @@ export class WaitingRoomComponent implements OnInit {
 
   startGame() {
     this.spyfallService.tellServerStartGame(this.roomDetail);
+  }
+
+  endGame() {
+    this.spyfallService.tellServerEndGame();
   }
 
   showhide() {
