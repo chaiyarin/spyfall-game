@@ -41,6 +41,7 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Role User : ' + this.spyfallService.getIsOwnRoom());
 
     this.spyfallService.connectRoom();
 

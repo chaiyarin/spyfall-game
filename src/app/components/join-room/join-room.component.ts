@@ -18,6 +18,7 @@ export class JoinRoomComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spyfallService.setIsOwnRoom(false);
   }
 
   setMemberName() {
