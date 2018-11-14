@@ -126,6 +126,7 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   endGame() {
+    clearInterval(this.instanceTime);
     this.spyfallService.tellServerEndGame();
   }
 
