@@ -20,10 +20,12 @@ export class WaitingRoomComponent implements OnInit {
   uniqCode: string;
   urlWaitingRoomWithRoomCode: string;
   isQrDisplay = false;
+  time;
   location: string;
   locations;
   playerInGame: Array<Player>;
   myPlayer: Player;
+  instanceTime;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -74,7 +76,34 @@ export class WaitingRoomComponent implements OnInit {
           i = this.playerInGame.length;
         }
       }
+      let timer = result.time_per_round * 60, minutes, seconds;
+      this.instanceTime = setInterval(() => {
+        minutes = parseInt((timer / 60).toString(), 10);
+        seconds = parseInt((timer % 60).toString(), 10);
+
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        this.time = minutes + ':' + seconds;
+        if (--timer < 0) {
+            alert('หมดเวลากรุณายกมือ ชี้สายลับ');
+            timer = 0;
+            clearInterval(this.instanceTime);
+        }
+      } , 1000);
     });
+  }
+
+  countDownTimeAndDisPlay(roomTime: number) {
+    const timer = roomTime * 60;
+    let minutes, seconds;
+    minutes = parseInt((timer / 60).toString(), 10);
+    seconds = parseInt((timer % 60).toString(), 10);
+
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    this.time = minutes + ':' + seconds;
   }
 
   kickUser(player: Player) {
