@@ -115,6 +115,7 @@ export class WaitingRoomComponent implements OnInit {
     player.uniq_code = this.spyfallService.getMyUniqId();
     this.kickUser(player);
     this.spyfallService.setRoomCode('');
+    this.spyfallService.tellServerDisconnect();
   }
 
   displayQrCode() {

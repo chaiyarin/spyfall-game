@@ -145,4 +145,8 @@ export class SpyfallService {
     return observable;
   }
 
+  tellServerDisconnect() {
+    this.socket.disconnect();
+  }
+
 }
