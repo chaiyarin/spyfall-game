@@ -82,10 +82,10 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   exitGame() {
-    this.spyfallService.setRoomCode('');
     const player = new Player();
     player.uniq_code = this.spyfallService.getMyUniqId();
     this.kickUser(player);
+    this.spyfallService.setRoomCode('');
   }
 
   displayQrCode() {
