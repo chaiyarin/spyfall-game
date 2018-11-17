@@ -59,7 +59,12 @@ export class SpyfallService {
   }
 
   connectRoom() {
-    this.socket = io.connect(this.apiUrl);
+    this.socket = io.connect(this.apiUrl, {query:
+      {
+        room_code: this.getRoomCode(),
+        uniq_code: this.getMyUniqId(),
+      }
+    });
     if (this.getIsOwnRoom()) {
       this.tellServerCreateRoom();
     } else {
@@ -112,6 +117,18 @@ export class SpyfallService {
   receiveRenderGame() {
     const observable = new Observable(observer => {
       this.socket.on('updateUIRenderGame:' + this.getRoomCode(), (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
+  receiveResumeGame() {
+    const observable = new Observable(observer => {
+      this.socket.on('resumeGame:' + this.getRoomCode() + ':' + this.getMyUniqId(), (data) => {
         observer.next(data);
       });
       return () => {

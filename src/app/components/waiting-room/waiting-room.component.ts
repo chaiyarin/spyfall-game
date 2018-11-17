@@ -47,7 +47,7 @@ export class WaitingRoomComponent implements OnInit {
 
     this.spyfallService.connectRoom();
 
-    this.spyfallService.receiveDetailRoom().subscribe( (result) => {
+    this.spyfallService.receiveDetailRoom().subscribe( (result: RoomDetail) => {
       Object.assign(this.roomDetail, result);
       this.isWait = !this.roomDetail.is_play;
     });
@@ -76,6 +76,7 @@ export class WaitingRoomComponent implements OnInit {
           i = this.playerInGame.length;
         }
       }
+      clearInterval(this.instanceTime);
       let timer = result.time_per_round * 60, minutes, seconds;
       this.instanceTime = setInterval(() => {
         minutes = parseInt((timer / 60).toString(), 10);
@@ -91,6 +92,11 @@ export class WaitingRoomComponent implements OnInit {
             clearInterval(this.instanceTime);
         }
       } , 1000);
+    });
+
+    this.spyfallService.receiveResumeGame().subscribe( (result: RoomDetail) => {
+      console.log('resume game');
+      alert('Resume Game');
     });
   }
 
