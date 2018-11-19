@@ -63,6 +63,7 @@ export class SpyfallService {
       {
         room_code: this.getRoomCode(),
         uniq_code: this.getMyUniqId(),
+        name: this.getMyName(),
       }
     });
     if (this.getIsOwnRoom()) {

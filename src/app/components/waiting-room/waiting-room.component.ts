@@ -43,7 +43,6 @@ export class WaitingRoomComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Role User : ' + this.spyfallService.getIsOwnRoom());
 
     this.spyfallService.connectRoom();
 
@@ -95,8 +94,23 @@ export class WaitingRoomComponent implements OnInit {
     });
 
     this.spyfallService.receiveResumeGame().subscribe( (result: RoomDetail) => {
-      console.log('resume game');
-      alert('Resume Game');
+      const gameStartDateTime = new Date(result.start_game_time);
+      const currentDateTime = Math.abs((new Date().getTime() - gameStartDateTime.getTime()) / 1000);
+      const diffTime = (result.time_per_round * 60) - Math.ceil(currentDateTime);
+      clearInterval(this.instanceTime);
+      let timer = diffTime, minutes, seconds;
+      this.instanceTime = setInterval(() => {
+        minutes = parseInt((timer / 60).toString(), 10);
+        seconds = parseInt((timer % 60).toString(), 10);
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        this.time = minutes + ':' + seconds;
+        if (--timer < 0) {
+            alert('หมดเวลากรุณายกมือ ชี้สายลับ');
+            timer = 0;
+            clearInterval(this.instanceTime);
+        }
+      } , 1000);
     });
   }
 
@@ -105,10 +119,8 @@ export class WaitingRoomComponent implements OnInit {
     let minutes, seconds;
     minutes = parseInt((timer / 60).toString(), 10);
     seconds = parseInt((timer % 60).toString(), 10);
-
     minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
-
     this.time = minutes + ':' + seconds;
   }
 
