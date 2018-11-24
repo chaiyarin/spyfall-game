@@ -7,6 +7,8 @@ export const environment = {
   // api_url: 'https://spyfall-server.herokuapp.com',
   // api_url: 'http://172.20.10.13:3000',
   // api_url: 'https://api.alab.in',
+  // apiUrl: 'http://api.alab.com',
+  // baseUrl: 'http://spyfall.alab.com',
   apiUrl: 'http://localhost:3000',
   baseUrl: 'http://localhost:4200',
 };
